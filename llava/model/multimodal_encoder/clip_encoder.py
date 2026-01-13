@@ -15,7 +15,7 @@ from typing import Callable, Tuple,List
 from .FiCoCo_V import *
 
 '''change hyper_para'''
-r =42
+r =32
 _ficoco_info = {
         "r": r,
         "size": None,
@@ -23,7 +23,7 @@ _ficoco_info = {
     }
 control_encoding_layer=11
 idx_now=0 
-merge_visual=False
+merge_visual=True
 if merge_visual:
     print(f'FiCoCo-v open')
 else:
@@ -132,6 +132,7 @@ class FiCoCo_CLIPEncoderLayer(CLIPEncoderLayer):
                     hidden_states, _ = merge_ficoco_v(
                         Compress, hidden_states, merge_indices, remain_indices, top_values, target_indices, rr, _ficoco_info["size"]
                     )
+                    # print(f"[FiCoCo-V] layer={idx_now} seq_len(with cls)={hidden_states.shape[1]}")
             #----ficoco_v add--------
             residual = hidden_states
             hidden_states = self.layer_norm2(hidden_states)

@@ -137,4 +137,4 @@ def Compress(
         x = x.scatter_add_(1, flat_indices, expanded_tokens)
         remain_idx = remain_idx.unsqueeze(-1)
         final_embeddings = x.gather(dim=-2, index=remain_idx.expand(n, t - reduction_factor, c))
-    return final_embeddings
+        return final_embeddings

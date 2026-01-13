@@ -67,7 +67,7 @@ def Filter(
     if adjusted_reduction <= 0:
         return att_score, att_score
     global dst_score_global
-    dst_score_global = dst_score_global.to(att_score.device)
+    dst_score_global = dst_score_global.to(device=att_score.device, dtype=att_score.dtype)
 
     with torch.no_grad():
         att_score = att_score.unsqueeze(0)
@@ -130,7 +130,8 @@ def Correlate(
 ) -> Tuple[torch.Tensor, torch.Tensor]:
     merge_indices_choose = merge_indices.squeeze(-1)
     choose_att_prob = att_scores[0, merge_indices_choose[0], :]
-    threshold_values = torch.quantile(choose_att_prob, 0.998, dim=-1, keepdim=True)
+    threshold_values = torch.quantile(choose_att_prob.float(), 0.998, dim=-1, keepdim=True)
+    threshold_values = threshold_values.to(dtype=choose_att_prob.dtype)
     mask = choose_att_prob > threshold_values
     topk_per_token = mask.sum(dim=-1)
     max_topk = topk_per_token.max().item()

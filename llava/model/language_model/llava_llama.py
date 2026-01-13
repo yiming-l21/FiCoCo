@@ -25,7 +25,6 @@ from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers.generation.utils import GenerateOutput
 
 from ..llava_arch import LlavaMetaModel, LlavaMetaForCausalLM
-from .tome import *
 
 from transformers.models.llama.modeling_llama import *
 from transformers.modeling_attn_mask_utils import (
@@ -34,7 +33,6 @@ from transformers.modeling_attn_mask_utils import (
     _prepare_4d_causal_attention_mask,
     _prepare_4d_causal_attention_mask_for_sdpa,
 )
-from .text_tome import compute_similarity
 from .FiCoCo_L import *
 r =14
 rr=r
@@ -49,7 +47,7 @@ _ficoco_info = {
     }
 control_encoding_layer=4
 idx_now=0 
-AT=True
+AT=False
 
 v2llm=576
 def adjust_position_ids(position_ids, kv_seq_len):
